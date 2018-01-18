@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize">
+    <TextView
+        android:id="@+id/themes_item_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#000"
+        android:text="电影日报"
+        android:textSize="17dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="20dp"
+        />
+    <ImageView
+        android:background="@drawable/drawer_theme_right"
+        android:layout_marginRight="30dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_width="40dp"
+        android:layout_height="40dp" />
+
+</RelativeLayout>

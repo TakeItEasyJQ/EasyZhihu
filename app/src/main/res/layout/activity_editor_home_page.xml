@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.example.easyzhihu.Activities.EditorHomePageActivity">
+
+        <WebView
+            android:id="@+id/webview_editor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </WebView>
+        <TextView
+            android:id="@+id/go_to_editor_zhihu"
+            android:textSize="16sp"
+            android:typeface="serif"
+            android:gravity="center"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginRight="15dp"
+            android:background="#f1f1f1"
+            android:textColor="#A9A9A9"
+            android:text="访问知乎主页"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:visibility="gone"/>
+
+    </LinearLayout>
+
+    </ScrollView>
+
+
+
+
+
+

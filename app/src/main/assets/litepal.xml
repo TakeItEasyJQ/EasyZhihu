@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<litepal>
+    <dbname value="ZhihuLibrary"/>
+    <version value="2"/>
+    <list>
+        <mapping class="com.example.easyzhihu.db.LatestStoryDB"/>
+        <mapping class="com.example.easyzhihu.db.TopFiveItemDB"/>
+        <mapping class="com.example.easyzhihu.db.ThemeDB"/>
+    </list>
+</litepal>

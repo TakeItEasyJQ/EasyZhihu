@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="#fff"
+    android:layout_gravity="start"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:background="#46b2ff"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize">
+            <ImageView
+                android:id="@+id/drawer_favor"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="32dp"
+                android:src="@drawable/drawer_favor"
+                android:layout_width="20dp"
+                android:layout_height="20dp"/>
+            <TextView
+                android:text="我的收藏"
+                android:textColor="#fff"
+                android:layout_marginLeft="20dp"            android:textSize="18dp"
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:background="#eaeced"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize">
+            <ImageView
+                android:id="@+id/drawer_home"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="30dp"
+                android:src="@drawable/drawer_home"
+                android:layout_width="30dp"
+                android:layout_height="30dp"/>
+            <TextView
+                android:text="首页"
+                android:textColor="#46B2FF"
+                android:layout_marginLeft="20dp"
+                android:textSize="19dp"
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <com.example.easyzhihu.MyView.MyListView
+
+            android:id="@+id/drawer_listview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@null"
+
+            />
+
+
+
+    </LinearLayout>
+
+</ScrollView>
