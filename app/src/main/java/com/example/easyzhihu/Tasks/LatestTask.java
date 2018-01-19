@@ -80,7 +80,7 @@ public class LatestTask extends AsyncTask<HomePageContent,Integer,Boolean> imple
                         }
                         MainActivity.latestStoryList=DataSupport.order("id desc").find(LatestStoryDB.class);
                         return true;
-                    }else if (homePageContent.latestStoriesList.size()<MainActivity.latestStoryList.size()){
+                    }else if (homePageContent.latestStoriesList.size()<=MainActivity.latestStoryList.size()){
                         DataSupport.deleteAll(LatestStoryDB.class);
 
                         for (int i=homePageContent.latestStoriesList.size()-1;i>=0;i--){    //-1
@@ -94,9 +94,6 @@ public class LatestTask extends AsyncTask<HomePageContent,Integer,Boolean> imple
 
                         MainActivity.latestStoryList=DataSupport.order("id desc").find(LatestStoryDB.class);
                         return true;
-                    }else if (homePageContent.latestStoriesList.size()==MainActivity.latestStoryList.size()){
-                        MainActivity.latestStoryList=DataSupport.order("id desc").find(LatestStoryDB.class);
-                        return false;
                     }else {
                         DataSupport.deleteAll(LatestStoryDB.class);
 

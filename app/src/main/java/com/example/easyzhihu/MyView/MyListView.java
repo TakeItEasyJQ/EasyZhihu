@@ -24,17 +24,17 @@ public class MyListView extends ListView implements ListView.OnScrollListener{
 
     public MyListView(Context context) {
         super(context);
-        init(context);
+//        init(context);
     }
 
     public MyListView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init(context);
+//        init(context);
     }
 
     public MyListView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(context);
+//        init(context);
     }
 
     @Override

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:orientation="horizontal"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/comments_long_item_avatar"
+        android:layout_marginLeft="17dp"
+        android:layout_marginTop="17dp"
+        android:src="@color/colorPrimary"
+        android:layout_width="35dp"
+        android:layout_height="35dp" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_toRightOf="@id/comments_long_item_avatar"
+        android:layout_marginLeft="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize">
+
+
+            <TextView
+                android:id="@+id/comments_long_item_likecounts"
+                android:textColor="#8a8a8a"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="17dp"
+                android:gravity="right"
+                android:text="0"
+                android:textSize="18sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:src="@drawable/comments_like"
+                android:layout_toLeftOf="@id/comments_long_item_likecounts"
+                android:layout_marginRight="5dp"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="15dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp" />
+
+            <TextView
+                android:id="@+id/comments_long_item_author"
+                android:text="Shin"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textColor="#000"
+                android:layout_marginTop="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                 />
+
+        </RelativeLayout>
+        <LinearLayout
+            android:id="@+id/comments_item_content_layout"
+            android:layout_marginRight="20dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/comments_long_item_content"
+                android:textColor="#000"
+                android:lineSpacingMultiplier="1.1"
+                android:text="外哦警方i挖掘阿哥i哦啊化工啊文化宫爱我感觉哦joi挖化工i阿文宏观i哈"
+                android:textSize="17sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:layout_marginTop="5dp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/comments_reply_name"
+                    android:text="//白夜追凶:"
+                    android:textColor="#000"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/comments_reply_content"
+                    android:layout_marginTop="5dp"
+                    android:lineSpacingMultiplier="1.1"
+                    android:textColor="#5f5d5d"
+                    android:textSize="17sp"
+                    android:text="对境外哦价格i哦啊将为公i敬爱哦降低阿基高位i够爱释迦佛环卫工哈克不能自拔呢"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+        <TextView
+            android:id="@+id/comments_item_time"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+            android:text="01-19 10:12"
+            android:textColor="#a9a9a9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+    </LinearLayout>
+    <TextView
+        android:background="#a9a9a9"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
+
+</RelativeLayout>

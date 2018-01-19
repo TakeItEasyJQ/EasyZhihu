@@ -18,7 +18,7 @@ public class Configs {
 
     public static final String News_EXTRA_Head="https://news-at.zhihu.com/api/4/story/"; //长评 短评 推荐人的公共header
     public static final String News_LongComments_Foot="/long-comments";               //head+id+foot
-    public static final String News_ShortComments_Foot="/long-comments";              //head+id+foot
+    public static final String News_ShortComments_Foot="/short-comments";              //head+id+foot
     public static final String News_Editor_Foot="/recommenders";                      //head+id+foot
 
 

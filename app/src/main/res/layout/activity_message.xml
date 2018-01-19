@@ -42,21 +42,26 @@
 
     <ScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
+        android:fillViewport="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
+
+
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <LinearLayout
+
+
+            <RelativeLayout
                 android:orientation="horizontal"
-                android:background="#f1f1f1"
                 android:layout_width="match_parent"
                 android:layout_height="45dp">
 
                 <TextView
-                    android:layout_gravity="center_vertical"
+                    android:id="@+id/long_counts"
+                    android:layout_centerVertical="true"
                     android:layout_marginLeft="15dp"
                     android:textSize="18sp"
                     android:text="123"
@@ -65,40 +70,75 @@
                     android:layout_height="wrap_content" />
 
                 <TextView
-                    android:layout_gravity="center_vertical"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/long_counts"
                     android:textSize="18sp"
                     android:text="条长评"
                     android:layout_marginLeft="5dp"
                     android:textColor="#000"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
-            </LinearLayout>
+                <TextView
+                    android:layout_alignParentBottom="true"
+                    android:background="#bfbfbf"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp" />
 
-            <ImageView
-                android:id="@+id/comments_nopic_img"
-                android:scaleType="centerCrop"
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:visibility="invisible"
+                android:orientation="vertical"
+                android:id="@+id/comments_nocomment_layout"
                 android:src="@drawable/drawer_home"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/sofa"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/comments_sofa"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp" />
+                <TextView
+                    android:text="深度长评 虚位以待"
+                    android:textSize="18sp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:textColor="#bfbfbf"
+                    android:layout_below="@id/sofa"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </RelativeLayout>
 
             <com.example.easyzhihu.MyView.MyListView
                 android:id="@+id/comments_long_listview"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                >
 
             </com.example.easyzhihu.MyView.MyListView>
 
 
 
-            <LinearLayout
-
+            <RelativeLayout
+                android:id="@+id/show_short_comments_layout"
                 android:orientation="horizontal"
-                android:background="#f1f1f1"
                 android:layout_width="match_parent"
                 android:layout_height="45dp">
 
+                <!--<TextView-->
+
+                    <!--android:background="#bfbfbf"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="1dp" />-->
+
                 <TextView
-                    android:layout_gravity="center_vertical"
+                    android:id="@+id/short_counts"
+                    android:layout_centerVertical="true"
                     android:layout_marginLeft="15dp"
                     android:textSize="18sp"
                     android:text="123"
@@ -107,17 +147,34 @@
                     android:layout_height="wrap_content" />
 
                 <TextView
-                    android:layout_gravity="center_vertical"
+                    android:layout_toRightOf="@id/short_counts"
+                    android:layout_centerVertical="true"
                     android:textSize="18sp"
-                    android:text="条长评"
+                    android:text="条短评"
                     android:layout_marginLeft="5dp"
                     android:textColor="#000"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
+                <ImageView
 
-            </LinearLayout>
+                    android:id="@+id/comments_show_short"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:src="@drawable/comments_up"
+                    android:layout_marginRight="10dp"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp" />
 
+            </RelativeLayout>
+
+            <com.example.easyzhihu.MyView.MyListView
+                android:id="@+id/comments_short_listview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+            </com.example.easyzhihu.MyView.MyListView>
 
         </LinearLayout>
 

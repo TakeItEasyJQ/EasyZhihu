@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.easyzhihu.Activities.MessageActivity;
 import com.example.easyzhihu.Interfaces.IFragmentContentListener;
@@ -106,15 +107,7 @@ public class ContentFragment extends Fragment {
         settings=webView.getSettings();
         settings.setJavaScriptEnabled(true);
 
-        message.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(getContext(), MessageActivity.class);
 
-                startActivity(intent);
-
-            }
-        });
 //        util=new BodyUtil(Configs.content);
 //        util.init();
 //        ShareUrl=util.getViewMoreUrl();
@@ -131,6 +124,8 @@ public class ContentFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         listener.setFragmentContent();
     }
+
+
 
     public void setFragmentContentListenter(IFragmentContentListener listenter){
         this.listener=listenter;

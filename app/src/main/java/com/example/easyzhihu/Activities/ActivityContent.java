@@ -75,21 +75,24 @@ public class ActivityContent extends AppCompatActivity  implements IFragmentCont
         setContentView(R.layout.activity_content);
         contentFragment=(ContentFragment)getSupportFragmentManager().findFragmentById(R.id.fragment_content);
         layout=(RelativeLayout)findViewById(R.id.headline_layout);
-        contentFragment.setFragmentContentListenter(this);
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                init();
+                getContent();
+
             }
         });
+        contentFragment.setFragmentContentListenter(ActivityContent.this);
     }
-    public void init(){
+    public void getContent(){
         final int newsid=getIntent().getIntExtra("newsid",0);
 
         if (newsid!=0){
+
             HttpUtils.getNewsContent(newsid, new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
+                    isContentFinished=true;
                     Toast.makeText(ActivityContent.this,"网络错误，请检查后重试",Toast.LENGTH_SHORT).show();
                 }
 
@@ -139,8 +142,9 @@ public class ActivityContent extends AppCompatActivity  implements IFragmentCont
                 @Override
                 public void onFailure(Call call, IOException e) {
 
-                }
+                    isExtraFinished=true;
 
+                }
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     Gson gson=new Gson();
@@ -164,8 +168,6 @@ public class ActivityContent extends AppCompatActivity  implements IFragmentCont
                 contentFragment.messageCount.setText(String.valueOf(commentsCounts));
             }
             if (isContentFinished){
-
-
                 contentFragment.headlineContentTitle.setText(title);
                 contentFragment.headlineSource.setText(image_source);
                 Glide.with(ActivityContent.this).load(Image).into(contentFragment.headlineImg);
@@ -197,10 +199,14 @@ public class ActivityContent extends AppCompatActivity  implements IFragmentCont
 
             }
             if (isContentFinished&&isExtraFinished){
+
                 break;
             }
         }
         loadDate=true;
+        isContentFinished=false;
+        isExtraFinished=false;
+        Toast.makeText(ActivityContent.this,String.valueOf(commentsCounts)+":"+String.valueOf(popularCounts),Toast.LENGTH_SHORT).show();
 
         setListeners();
     }
@@ -226,14 +232,19 @@ public class ActivityContent extends AppCompatActivity  implements IFragmentCont
                 break;
             case R.id.fragment_message:
 
+//                Toast.makeText(this,"12321",Toast.LENGTH_SHORT).show();
+                Intent intentmessage=new Intent(ActivityContent.this, MessageActivity.class);
+                intentmessage.putExtra("newsid",getIntent().getIntExtra("newsid",0));
+                startActivity(intentmessage);
                 break;
+
             case R.id.fragment_agree:
 
                 break;
             case R.id.button_view_more:
-                Intent intent=new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse(view_more));
-                startActivity(intent);
+                Intent intentviewmore=new Intent(Intent.ACTION_VIEW);
+                intentviewmore.setData(Uri.parse(view_more));
+                startActivity(intentviewmore);
                 break;
             case R.id.section_layout:
                 Toast.makeText(ActivityContent.this,"123",Toast.LENGTH_SHORT).show();
@@ -251,8 +262,8 @@ public class ActivityContent extends AppCompatActivity  implements IFragmentCont
         contentFragment.favor.setOnClickListener(this);
         contentFragment.message.setOnClickListener(this);
         contentFragment.agree.setOnClickListener(this);
-
         contentFragment.viewMore.setOnClickListener(this);
         contentFragment.layout.setOnClickListener(this);
     }
+
 }

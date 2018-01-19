@@ -66,7 +66,6 @@ public class ViewPagerFragment extends Fragment {
                                 return;
                             }
                             MainActivity.latestStoryList=DataSupport.order("id desc").find(LatestStoryDB.class);
-
                         }
                     }).start();
                 }
