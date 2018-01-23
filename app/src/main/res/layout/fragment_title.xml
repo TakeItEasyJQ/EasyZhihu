@@ -56,7 +56,7 @@
         android:layout_marginRight="25dp"
         android:layout_centerVertical="true"
         android:layout_toLeftOf="@id/fragment_message"
-        android:background="@drawable/frgament_favor_bg1"
+        android:background="@drawable/fragment_favor_bg1"
         android:layout_width="25dp"
         android:layout_height="25dp"/>
 

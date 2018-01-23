@@ -121,10 +121,6 @@ public class TopfiveTask extends AsyncTask <HomePageContent,Integer,Boolean>
                     return false;
                 }
 
-
-
-
-
 //                if (MainActivity.topFiveItemList.get(0).getNewsid()!=homePageContent.topFiveList.get(0).newsid){
 //
 //                    DataSupport.deleteAll(TopFiveItemDB.class);                 //数据库清空后重新添加数据

@@ -18,6 +18,7 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -55,6 +56,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public TextView textView;
     public FragmentManager manager;
 
+    public LinearLayout layout_favor;
+    public LinearLayout layout_homepage;
+
     public static ArrayAdapter adapter;
 
 
@@ -88,6 +92,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         toolbar=(Toolbar)findViewById(R.id.toolbar_main);
         toolbar.setTitle("");
         actionBar=getSupportActionBar();
+
+        layout_favor=(LinearLayout)findViewById(R.id.layout_favor);
+        layout_homepage=(LinearLayout)findViewById(R.id.layout_homepage);
 
         openDrawer=(ImageView)findViewById(R.id.main_home);
 
@@ -174,6 +181,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 themeListview.setAdapter(MainActivity.themesListAdapter);
                 themesListAdapter.notifyDataSetChanged();
                 break;
+            case R.id.layout_favor:
+                Intent intent=new Intent(MainActivity.this,StoryFavorActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.layout_homepage:
+                drawer.closeDrawers();
             default:
                 break;
         }
@@ -181,7 +194,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void setListeners(){
-            openDrawer.setOnClickListener(this);
+        openDrawer.setOnClickListener(this);
+        layout_favor.setOnClickListener(this);
+        layout_homepage.setOnClickListener(this);
 
     }
 

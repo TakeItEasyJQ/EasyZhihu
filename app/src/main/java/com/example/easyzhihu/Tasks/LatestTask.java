@@ -52,68 +52,121 @@ public class LatestTask extends AsyncTask<HomePageContent,Integer,Boolean> imple
             MainActivity.latestStoryList=DataSupport.order("id desc").find(LatestStoryDB.class);
             return false;
         }else {
-            if (MainActivity.latestStoryList.size()==0){
-                int length=homePageContent.latestStoriesList.size()-MainActivity.latestStoryList.size();
-                for (int i=length-1;i>=0;i--){
-                    LatestStoryDB latestStory=new LatestStoryDB();
+            if (MainActivity.latestStoryList.size() == 0) {
+                int length = homePageContent.latestStoriesList.size() - MainActivity.latestStoryList.size();
+                for (int i = length - 1; i >= 0; i--) {
+                    LatestStoryDB latestStory = new LatestStoryDB();
                     latestStory.setDate(homePageContent.date);
                     latestStory.setTitle(homePageContent.latestStoriesList.get(i).title);
                     latestStory.setNewsid(homePageContent.latestStoriesList.get(i).newsid);
                     latestStory.setImages(homePageContent.latestStoriesList.get(i).images);
                     latestStory.save();
                 }
-                MainActivity.latestStoryList=DataSupport.order("id desc").find(LatestStoryDB.class);
+                MainActivity.latestStoryList = DataSupport.order("id desc").find(LatestStoryDB.class);
                 return true;
+            } else {
+                int a = Integer.valueOf(MainActivity.latestStoryList.get(0).getDate()) - Integer.valueOf(homePageContent.date);
 
-            }else {
-                if(Integer.valueOf(homePageContent.date)-Integer.valueOf(MainActivity.latestStoryList.get(0).getDate())<=1){
+                if (a < 0 || a == 1130) {          //非当天,更新本地数据库数据为最新获取的数据
 
-                    if (homePageContent.latestStoriesList.size()>MainActivity.latestStoryList.size()){
-                        int length=homePageContent.latestStoriesList.size()-MainActivity.latestStoryList.size();
-                        for (int i=length-1;i>=0;i--){
-                            LatestStoryDB latestStory=new LatestStoryDB();
+                    DataSupport.deleteAll(LatestStoryDB.class);
+                    for (int i = homePageContent.latestStoriesList.size() - 1; i >= 0; i--) {    //-1
+                        LatestStoryDB latestStory = new LatestStoryDB();
+                        latestStory.setDate(homePageContent.date);
+                        latestStory.setTitle(homePageContent.latestStoriesList.get(i).title);
+                        latestStory.setNewsid(homePageContent.latestStoriesList.get(i).newsid);
+                        latestStory.setImages(homePageContent.latestStoriesList.get(i).images);
+                        latestStory.save();
+                    }
+                    MainActivity.latestStoryList = DataSupport.order("id desc").find(LatestStoryDB.class);
+                    return true;
+
+                } else {                        //当前，根据数据长度差异来进行差异化处理
+
+                    //当天的新获取数据长度多于本地数据,想本地数据库中追加新的数据
+                    if (homePageContent.latestStoriesList.size() > MainActivity.latestStoryList.size()) {
+                        int length = homePageContent.latestStoriesList.size() - MainActivity.latestStoryList.size();
+                        for (int i = length - 1; i >= 0; i--) {
+                            LatestStoryDB latestStory = new LatestStoryDB();
                             latestStory.setDate(homePageContent.date);
                             latestStory.setTitle(homePageContent.latestStoriesList.get(i).title);
                             latestStory.setNewsid(homePageContent.latestStoriesList.get(i).newsid);
                             latestStory.setImages(homePageContent.latestStoriesList.get(i).images);
                             latestStory.save();
                         }
-                        MainActivity.latestStoryList=DataSupport.order("id desc").find(LatestStoryDB.class);
+                        MainActivity.latestStoryList = DataSupport.order("id desc").find(LatestStoryDB.class);
                         return true;
-                    }else if (homePageContent.latestStoriesList.size()<=MainActivity.latestStoryList.size()){
-                        DataSupport.deleteAll(LatestStoryDB.class);
+                    } else if (homePageContent.latestStoriesList.size() < MainActivity.latestStoryList.size()) {
 
-                        for (int i=homePageContent.latestStoriesList.size()-1;i>=0;i--){    //-1
-                            LatestStoryDB latestStory=new LatestStoryDB();
+                        DataSupport.deleteAll(LatestStoryDB.class);
+                        for (int i = homePageContent.latestStoriesList.size() - 1; i >= 0; i--) {    //-1
+                            LatestStoryDB latestStory = new LatestStoryDB();
                             latestStory.setDate(homePageContent.date);
                             latestStory.setTitle(homePageContent.latestStoriesList.get(i).title);
                             latestStory.setNewsid(homePageContent.latestStoriesList.get(i).newsid);
                             latestStory.setImages(homePageContent.latestStoriesList.get(i).images);
                             latestStory.save();
                         }
-
-                        MainActivity.latestStoryList=DataSupport.order("id desc").find(LatestStoryDB.class);
-                        return true;
-                    }else {
-                        DataSupport.deleteAll(LatestStoryDB.class);
-
-                        for (int i=homePageContent.latestStoriesList.size()-1;i>=0;i--){    //-1
-                            LatestStoryDB latestStory=new LatestStoryDB();
-                            latestStory.setDate(homePageContent.date);
-                            latestStory.setTitle(homePageContent.latestStoriesList.get(i).title);
-                            latestStory.setNewsid(homePageContent.latestStoriesList.get(i).newsid);
-                            latestStory.setImages(homePageContent.latestStoriesList.get(i).images);
-                            latestStory.save();
-                        }
-                        MainActivity.latestStoryList=DataSupport.order("id desc").find(LatestStoryDB.class);
+                        MainActivity.latestStoryList = DataSupport.order("id desc").find(LatestStoryDB.class);
                         return true;
                     }
                 }
+
             }
-
-
-
         }
+
+
+
+//            else {
+//                int a=Integer.valueOf(MainActivity.latestStoryList.get(0).getDate())-Integer.valueOf(homePageContent.date);
+//
+//                if(a<=0||a==1130){
+//
+//                    if (homePageContent.latestStoriesList.size()>MainActivity.latestStoryList.size()){
+//                        int length=homePageContent.latestStoriesList.size()-MainActivity.latestStoryList.size();
+//                        for (int i=length-1;i>=0;i--){
+//                            LatestStoryDB latestStory=new LatestStoryDB();
+//                            latestStory.setDate(homePageContent.date);
+//                            latestStory.setTitle(homePageContent.latestStoriesList.get(i).title);
+//                            latestStory.setNewsid(homePageContent.latestStoriesList.get(i).newsid);
+//                            latestStory.setImages(homePageContent.latestStoriesList.get(i).images);
+//                            latestStory.save();
+//                        }
+//                        MainActivity.latestStoryList=DataSupport.order("id desc").find(LatestStoryDB.class);
+//                        return true;
+//                    }else if (homePageContent.latestStoriesList.size()<=MainActivity.latestStoryList.size()){
+//
+//
+//                        DataSupport.deleteAll(LatestStoryDB.class);
+//                        for (int i=homePageContent.latestStoriesList.size()-1;i>=0;i--){    //-1
+//                            LatestStoryDB latestStory=new LatestStoryDB();
+//                            latestStory.setDate(homePageContent.date);
+//                            latestStory.setTitle(homePageContent.latestStoriesList.get(i).title);
+//                            latestStory.setNewsid(homePageContent.latestStoriesList.get(i).newsid);
+//                            latestStory.setImages(homePageContent.latestStoriesList.get(i).images);
+//                            latestStory.save();
+//                        }
+//
+//                        MainActivity.latestStoryList=DataSupport.order("id desc").find(LatestStoryDB.class);
+//                        return true;
+//                    }else {
+//                        DataSupport.deleteAll(LatestStoryDB.class);
+//
+//                        for (int i=homePageContent.latestStoriesList.size()-1;i>=0;i--){    //-1
+//                            LatestStoryDB latestStory=new LatestStoryDB();
+//                            latestStory.setDate(homePageContent.date);
+//                            latestStory.setTitle(homePageContent.latestStoriesList.get(i).title);
+//                            latestStory.setNewsid(homePageContent.latestStoriesList.get(i).newsid);
+//                            latestStory.setImages(homePageContent.latestStoriesList.get(i).images);
+//                            latestStory.save();
+//                        }
+//                        MainActivity.latestStoryList=DataSupport.order("id desc").find(LatestStoryDB.class);
+//                        return true;
+//                    }
+//                }
+//            }
+
+
         return true;
     }
 

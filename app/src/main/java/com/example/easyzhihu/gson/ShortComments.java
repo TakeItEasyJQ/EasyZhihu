@@ -12,10 +12,19 @@ public class ShortComments {       //短评论
 
     public class Comment{
         public String author;
-        public String cotent;
+        public String content;
         public int id;
         public int likes;
         public int time;
         public String avatar;
+
+        public Reply reply_to;
+        public class Reply{
+            public String content;
+            public int id;
+            public int status;
+            public String author;
+            public String err_msg;   //status非0时出现
+        }
     }
 }

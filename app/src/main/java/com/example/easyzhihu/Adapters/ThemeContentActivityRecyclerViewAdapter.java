@@ -30,6 +30,7 @@ public class ThemeContentActivityRecyclerViewAdapter
 
     private List<ThemeID.Editor> editors;
     private Context context;
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         public CircleImageView authorImg;
         public ViewHolder(View view){

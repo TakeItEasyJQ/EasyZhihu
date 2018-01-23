@@ -26,7 +26,8 @@
         <activity android:name=".Activities.ThemeContentActivity" />
         <activity android:name=".Activities.EditorActivity" />
         <activity android:name=".Activities.EditorHomePageActivity" />
-        <activity android:name=".Activities.MessageActivity"></activity>
+        <activity android:name=".Activities.MessageActivity" />
+        <activity android:name=".Activities.StoryFavorActivity"></activity>
     </application>
 
 </manifest>

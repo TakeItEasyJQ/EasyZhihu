@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.RelativeLayout;
@@ -24,6 +25,9 @@ import com.example.easyzhihu.db.StoryFavoriteDB;
 import com.example.easyzhihu.gson.Content;
 import com.example.easyzhihu.gson.StoryExtra;
 import com.google.gson.Gson;
+
+import org.litepal.crud.DataSupport;
+
 import java.io.IOException;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -56,15 +60,15 @@ public class ActivityContent extends AppCompatActivity  implements IFragmentCont
 
     private boolean isContentFinished;
     private boolean isExtraFinished;
-    private boolean loadDate=true;
     private boolean hasSection;
-    private boolean newssaved;
 
     private String view_more;
 
     private Content newsContent;
 
     private RelativeLayout layout;
+
+    private IContralListener listener;
 
 
 
@@ -75,6 +79,10 @@ public class ActivityContent extends AppCompatActivity  implements IFragmentCont
         setContentView(R.layout.activity_content);
         contentFragment=(ContentFragment)getSupportFragmentManager().findFragmentById(R.id.fragment_content);
         layout=(RelativeLayout)findViewById(R.id.headline_layout);
+
+        contentFragment.setFragmentContentListenter(ActivityContent.this);
+
+
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -82,7 +90,6 @@ public class ActivityContent extends AppCompatActivity  implements IFragmentCont
 
             }
         });
-        contentFragment.setFragmentContentListenter(ActivityContent.this);
     }
     public void getContent(){
         final int newsid=getIntent().getIntExtra("newsid",0);
@@ -155,19 +162,29 @@ public class ActivityContent extends AppCompatActivity  implements IFragmentCont
 
                 }
             });
-
         }
+
     }
 
     @Override
     public void setFragmentContent() {
 
-        while (loadDate){
-            if (isExtraFinished){
+        while (true){
+            if (isExtraFinished&&isContentFinished){
+                break;
+            }
+        }
+                if (DataSupport.where("newsid = ?",String.valueOf(newsContent.id)).find(StoryFavoriteDB.class).size()!=0){
+                    Glide.with(ActivityContent.this).load(R.drawable.fragment_favor_bg2).into(contentFragment.favor);
+                }else {
+                    Toast.makeText(ActivityContent.this,"no",Toast.LENGTH_SHORT).show();
+                    Glide.with(ActivityContent.this).load(R.drawable.fragment_favor_bg1).into(contentFragment.favor);
+                }
+
                 contentFragment.agreeCount.setText(String.valueOf(popularCounts));
                 contentFragment.messageCount.setText(String.valueOf(commentsCounts));
-            }
-            if (isContentFinished){
+
+
                 contentFragment.headlineContentTitle.setText(title);
                 contentFragment.headlineSource.setText(image_source);
                 Glide.with(ActivityContent.this).load(Image).into(contentFragment.headlineImg);
@@ -176,6 +193,7 @@ public class ActivityContent extends AppCompatActivity  implements IFragmentCont
                     layout.setVisibility(View.GONE);
                 }
 
+                //以下没出过毛病
 
                 contentFragment.webView.loadDataWithBaseURL(null,body,"text/html","gbk",null);
                 contentFragment.webView.setWebViewClient(new WebViewClient(){
@@ -195,21 +213,20 @@ public class ActivityContent extends AppCompatActivity  implements IFragmentCont
                         }
 
                     }
+
+                    @Override
+                    public boolean shouldOverrideUrlLoading(WebView view, String url) {
+
+                        Intent intent=new Intent(Intent.ACTION_VIEW);
+                        intent.setData(Uri.parse(url));
+                        startActivity(intent);
+
+                        return true;
+                    }
                 });
-
-            }
-            if (isContentFinished&&isExtraFinished){
-
-                break;
-            }
-        }
-        loadDate=true;
-        isContentFinished=false;
-        isExtraFinished=false;
-        Toast.makeText(ActivityContent.this,String.valueOf(commentsCounts)+":"+String.valueOf(popularCounts),Toast.LENGTH_SHORT).show();
-
         setListeners();
     }
+
 
     @Override
     public void onClick(View v) {
@@ -222,17 +239,25 @@ public class ActivityContent extends AppCompatActivity  implements IFragmentCont
                 break;
             case R.id.fragment_favor:
 
-                newssaved=true;
 
-                StoryFavoriteDB storyFavor=new StoryFavoriteDB();
-                storyFavor.setNewsid(newsContent.id);
-                storyFavor.setTitle(newsContent.title);
-                storyFavor.setImageurl(newsContent.images.get(0));
-                storyFavor.save();
+                if (DataSupport.where("newsid = ?",String.valueOf(newsContent.id)).find(StoryFavoriteDB.class).size()!=0){ //收藏了
+                    DataSupport.deleteAll(StoryFavoriteDB.class,"newsid = ?",String.valueOf(newsContent.id));
+                    Glide.with(ActivityContent.this).load(R.drawable.fragment_favor_bg1).into(contentFragment.favor);
+                }else {
+                    Glide.with(ActivityContent.this).load(R.drawable.fragment_favor_bg2).into(contentFragment.favor);
+                    StoryFavoriteDB storyFavor=new StoryFavoriteDB();
+                    storyFavor.setNewsid(newsContent.id);
+                    storyFavor.setTitle(newsContent.title);
+                    storyFavor.setImageurl(newsContent.images.get(0));
+                    storyFavor.save();
+                }
+
+
+
+
                 break;
             case R.id.fragment_message:
 
-//                Toast.makeText(this,"12321",Toast.LENGTH_SHORT).show();
                 Intent intentmessage=new Intent(ActivityContent.this, MessageActivity.class);
                 intentmessage.putExtra("newsid",getIntent().getIntExtra("newsid",0));
                 startActivity(intentmessage);
@@ -266,4 +291,21 @@ public class ActivityContent extends AppCompatActivity  implements IFragmentCont
         contentFragment.layout.setOnClickListener(this);
     }
 
+
+
+    public void setContralListener(IContralListener listener){
+        this.listener=listener;
+    }
+
+
+    public interface IContralListener{
+        void showContent();
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        listener.showContent();
+    }
 }

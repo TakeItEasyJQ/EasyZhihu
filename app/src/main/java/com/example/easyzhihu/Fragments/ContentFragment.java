@@ -21,6 +21,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.easyzhihu.Activities.ActivityContent;
+import com.example.easyzhihu.Activities.MainActivity;
 import com.example.easyzhihu.Activities.MessageActivity;
 import com.example.easyzhihu.Interfaces.IFragmentContentListener;
 import com.example.easyzhihu.R;
@@ -30,7 +32,7 @@ import com.example.easyzhihu.R;
  * Created by My Computer on 2017/12/12.
  */
 
-public class ContentFragment extends Fragment {
+public class ContentFragment extends Fragment implements ActivityContent.IContralListener {
 
 
     public ImageView back;
@@ -61,11 +63,15 @@ public class ContentFragment extends Fragment {
 
     public boolean isFinished;
 
+    private ActivityContent activity;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        activity=(ActivityContent)getActivity();
+        activity.setContralListener(this);
 
     }
 
@@ -106,33 +112,23 @@ public class ContentFragment extends Fragment {
 
         settings=webView.getSettings();
         settings.setJavaScriptEnabled(true);
+        webView.setWebViewClient(new WebViewClient(){
 
-
-//        util=new BodyUtil(Configs.content);
-//        util.init();
-//        ShareUrl=util.getViewMoreUrl();
-//        util.RemoveViewMore();
-//        webView.loadDataWithBaseURL(null,util.getNewContent(),"text/html","GBK",null);
-
+        });
 
         return view;
 
     }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        listener.setFragmentContent();
-    }
-
-
 
     public void setFragmentContentListenter(IFragmentContentListener listenter){
         this.listener=listenter;
 
     }
 
-
+    @Override
+    public void showContent() {
+        listener.setFragmentContent();
+    }
 
     //    @Override
 //    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {

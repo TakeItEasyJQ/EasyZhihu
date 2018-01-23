@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.easyzhihu.R;
-import com.example.easyzhihu.gson.LongComments;
+import com.example.easyzhihu.gson.ShortComments;
 
 import java.util.List;
 
@@ -19,10 +19,10 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by My Computer on 2018/1/23.
  */
 
-public class LongCommentsAdapter extends RecyclerView.Adapter<LongCommentsAdapter.ViewHolder> {
+public class ShortCommentsAdapter extends RecyclerView.Adapter<ShortCommentsAdapter.ViewHolder> {
 
     private Context context;
-    private List<LongComments.Comment> comments;
+    private List<ShortComments.Comment> comments;
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         public CircleImageView avatar;
@@ -45,7 +45,7 @@ public class LongCommentsAdapter extends RecyclerView.Adapter<LongCommentsAdapte
         }
     }
 
-    public LongCommentsAdapter(Context context, List<LongComments.Comment> comments) {
+    public ShortCommentsAdapter(Context context,List<ShortComments.Comment> comments) {
         super();
         this.context=context;
         this.comments=comments;
@@ -53,35 +53,31 @@ public class LongCommentsAdapter extends RecyclerView.Adapter<LongCommentsAdapte
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
-
         View view= LayoutInflater.from(context).inflate(R.layout.comment_item,parent,false);
         ViewHolder holder=new ViewHolder(view);
         return holder;
+
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        ShortComments.Comment comment=comments.get(position);
 
-        LongComments.Comment longComment=comments.get(position);
+        Glide.with(context).load(comment.avatar).into(holder.avatar);
+        holder.author.setText(comment.author);
+        holder.likecounts.setText(String.valueOf(comment.likes) );
+        holder.content.setText(comment.content);
 
-        Glide.with(context).load(longComment.avatar).into(holder.avatar);
-        holder.author.setText(longComment.author);
-        holder.likecounts.setText(String.valueOf(longComment.likes) );
-        holder.content.setText(longComment.content);
-
-        if (longComment.reply_to!=null){
-            if (longComment.reply_to.status==0){
-                holder.reply_author.setText("// "+longComment.reply_to.author+":");
-                holder.reply_content.setText(longComment.reply_to.content);
+        if (comment.reply_to!=null){
+            if (comment.reply_to.status==0){
+                holder.reply_author.setText("// "+comment.reply_to.author+":");
+                holder.reply_content.setText(comment.reply_to.content);
             }else {
-                holder.reply_content.setText(longComment.reply_to.err_msg);
+                holder.reply_content.setText(comment.reply_to.err_msg);
             }
             holder.reply_author.setVisibility(View.VISIBLE);
             holder.reply_content.setVisibility(View.VISIBLE);
         }
-
-
 
     }
 
