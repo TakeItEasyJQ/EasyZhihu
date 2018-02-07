@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.easyzhihu.R;
+import com.example.easyzhihu.Utils.TimeUtil;
 import com.example.easyzhihu.gson.LongComments;
 
 import java.util.List;
@@ -69,7 +70,7 @@ public class LongCommentsAdapter extends RecyclerView.Adapter<LongCommentsAdapte
         holder.author.setText(longComment.author);
         holder.likecounts.setText(String.valueOf(longComment.likes) );
         holder.content.setText(longComment.content);
-
+        holder.time.setText(TimeUtil.getDateToString(longComment.time));
         if (longComment.reply_to!=null){
             if (longComment.reply_to.status==0){
                 holder.reply_author.setText("// "+longComment.reply_to.author+":");

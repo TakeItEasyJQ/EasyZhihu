@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.easyzhihu.R;
+import com.example.easyzhihu.Utils.TimeUtil;
 import com.example.easyzhihu.gson.ShortComments;
 
 import java.util.List;
@@ -67,7 +68,7 @@ public class ShortCommentsAdapter extends RecyclerView.Adapter<ShortCommentsAdap
         holder.author.setText(comment.author);
         holder.likecounts.setText(String.valueOf(comment.likes) );
         holder.content.setText(comment.content);
-
+        holder.time.setText(TimeUtil.getDateToString(comment.time));
         if (comment.reply_to!=null){
             if (comment.reply_to.status==0){
                 holder.reply_author.setText("// "+comment.reply_to.author+":");
@@ -85,4 +86,8 @@ public class ShortCommentsAdapter extends RecyclerView.Adapter<ShortCommentsAdap
     public int getItemCount() {
         return comments.size();
     }
+
+
 }
+
+

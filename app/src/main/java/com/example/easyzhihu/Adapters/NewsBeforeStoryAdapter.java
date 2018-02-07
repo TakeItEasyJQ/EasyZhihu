@@ -9,28 +9,28 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.easyzhihu.Activities.ActivityContent;
-import com.example.easyzhihu.Activities.MainActivity;
 import com.example.easyzhihu.R;
-import com.example.easyzhihu.Utils.TimeUtil;
-import com.example.easyzhihu.db.LatestStoryDB;
+import com.example.easyzhihu.db.NewsBeforeDB;
+import com.example.easyzhihu.gson.NewsBefore;
 
-import java.text.ParseException;
+import org.litepal.crud.DataSupport;
+
 import java.util.List;
 
 /**
- * Created by My Computer on 2018/1/30.
+ * Created by My Computer on 2018/2/2.
  */
 
-public class LatestAdapter extends RecyclerView.Adapter<LatestAdapter.ViewHolder> {
+public class NewsBeforeStoryAdapter extends RecyclerView.Adapter <NewsBeforeStoryAdapter.ViewHolder> {
 
-    private List<LatestStoryDB> latestStories;
+
     private Context context;
+    private List<NewsBefore.Story> stories;
 
-    public  class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder{
 
         public TextView title;
         public ImageView images;
@@ -40,14 +40,14 @@ public class LatestAdapter extends RecyclerView.Adapter<LatestAdapter.ViewHolder
             title=(TextView)itemView.findViewById(R.id.item_title);
             images=(ImageView)itemView.findViewById(R.id.item_images);
         }
-
     }
 
-    public LatestAdapter(Context context, List<LatestStoryDB> latestStories) {
+    public NewsBeforeStoryAdapter(Context context,List<NewsBefore.Story> stories) {
         super();
         this.context=context;
-        this.latestStories=latestStories;
+        this.stories=stories;
     }
+
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -57,41 +57,35 @@ public class LatestAdapter extends RecyclerView.Adapter<LatestAdapter.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, final int position) {
-        final LatestStoryDB latestStory=latestStories.get(position);
+    public void onBindViewHolder(final ViewHolder holder, int position) {
+
+        final NewsBefore.Story story=stories.get(position);
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent intent=new Intent(context, ActivityContent.class);
-                intent.putExtra("newsid",latestStory.getNewsid());
+                intent.putExtra("newsid",story.newsid);
                 intent.putExtra("fromtheme",false);
                 context.startActivity(intent);
                 holder.title.setTextColor(Color.GRAY);
-
-                //如果数据库中此项数据的已读标识为false 则改为true即标记为已读
-                LatestStoryDB story=MainActivity.latestStoryList.get(position);
-                if (!latestStory.isHasreaded()){
-                    story.setHasreaded(true);
-                    story.save();
+                NewsBeforeDB newsBefore= DataSupport.where("newsid = ?",String.valueOf(story.newsid)).find(NewsBeforeDB.class).get(0);
+                if (newsBefore!=null){
+                    newsBefore.setHasreaded(true);
+                    newsBefore.save();
                 }
-
 
             }
         });
+        holder.title.setText(story.title);
+        Glide.with(context).load(story.images.get(0)).into(holder.images);
 
-        if (latestStory.isHasreaded()){
-            holder.title.setTextColor(Color.GRAY);
-        }
-        holder.title.setText(latestStory.getTitle());
-        Glide.with(context).load(latestStory.getImages().get(0)).into(holder.images);
     }
 
     @Override
     public int getItemCount() {
-        return latestStories.size();
+        return stories.size() ;
     }
-
 
 
 }

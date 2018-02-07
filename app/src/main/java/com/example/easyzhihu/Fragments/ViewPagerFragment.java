@@ -9,15 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.easyzhihu.Activities.ActivityContent;
 import com.example.easyzhihu.Activities.MainActivity;
-import com.example.easyzhihu.Adapters.LatestAdapter;
 import com.example.easyzhihu.R;
 import com.example.easyzhihu.db.LatestStoryDB;
-import com.example.easyzhihu.db.TopFiveItemDB;
 
 import org.litepal.crud.DataSupport;
 
@@ -46,9 +43,9 @@ public class ViewPagerFragment extends Fragment {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Toast.makeText(getContext(),textView.getText(),Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(),viewpagertitle.getText(),Toast.LENGTH_SHORT).show();
                 if (newsId!=0){
-//                    TopFiveItemDB topFiveItem= DataSupport.where("title = ?" ,textView.getText().toString()).find(TopFiveItemDB.class).get(0);
+//                    TopFiveItemDB topFiveItem= DataSupport.where("title = ?" ,viewpagertitle.getText().toString()).find(TopFiveItemDB.class).get(0);
                     Intent intent=new Intent(getContext(), ActivityContent.class);
                     intent.putExtra("newsid",newsId);
                     startActivity(intent);

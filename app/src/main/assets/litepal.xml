@@ -7,5 +7,7 @@
         <mapping class="com.example.easyzhihu.db.TopFiveItemDB"/>
         <mapping class="com.example.easyzhihu.db.ThemeDB"/>
         <mapping class="com.example.easyzhihu.db.StoryFavoriteDB"/>
+        <mapping class="com.example.easyzhihu.db.NewsBeforeDB"/>
+        <mapping class="com.example.easyzhihu.db.ThemeStoriesDB"/>
     </list>
 </litepal>

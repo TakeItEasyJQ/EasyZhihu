@@ -177,7 +177,6 @@ public class ActivityContent extends AppCompatActivity  implements IFragmentCont
                 if (DataSupport.where("newsid = ?",String.valueOf(newsContent.id)).find(StoryFavoriteDB.class).size()!=0){
                     Glide.with(ActivityContent.this).load(R.drawable.fragment_favor_bg2).into(contentFragment.favor);
                 }else {
-                    Toast.makeText(ActivityContent.this,"no",Toast.LENGTH_SHORT).show();
                     Glide.with(ActivityContent.this).load(R.drawable.fragment_favor_bg1).into(contentFragment.favor);
                 }
 
@@ -272,7 +271,10 @@ public class ActivityContent extends AppCompatActivity  implements IFragmentCont
                 startActivity(intentviewmore);
                 break;
             case R.id.section_layout:
-                Toast.makeText(ActivityContent.this,"123",Toast.LENGTH_SHORT).show();
+                Intent intent=new Intent(ActivityContent.this,SectionActivity.class);
+                intent.putExtra("sectionid",sectionId);
+                intent.putExtra("sectionname",sectionName);
+                startActivity(intent);
                 break;
             default:
                 break;

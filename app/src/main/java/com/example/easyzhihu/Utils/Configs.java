@@ -21,12 +21,19 @@ public class Configs {
     public static final String News_ShortComments_Foot="/short-comments";              //head+id+foot
     public static final String News_Editor_Foot="/recommenders";                      //head+id+foot
 
+    public static final String News_MoreComments_Foot ="/before/";   //head+newsid+foot+morefoot+userid
+
 
     public static final String News_Themes="https://news-at.zhihu.com/api/4/themes";
     public static final String News_Theme="https://news-at.zhihu.com/api/4/theme/";      //News_Theme+themeid
+    public static final String Nesw_Theme_Foot="/before/";   //head + themeid + before + lastetnewsid;
 
     public static final String Editor_Home_Page_Head="https://news-at.zhihu.com/api/4/editor/";
     public static final String Editor_Home_Page_Foot="/profile-page/android";                //head+id+foot
+
+    public static final String Section_Head="https://news-at.zhihu.com/api/3/section/";  //head + id
+    public static final String Section_foot="/before/";   //head + id + foot +timestamp
+
 
     public static final int Http_Success=1;
     public static final int Http_Failure=0;

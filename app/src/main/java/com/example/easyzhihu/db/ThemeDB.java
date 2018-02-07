@@ -6,7 +6,7 @@ import org.litepal.crud.DataSupport;
  * Created by My Computer on 2018/1/12.
  */
 
-public class ThemeDB extends DataSupport {
+public class ThemeDB extends DataSupport {   //drawerlayout中的Themes列表
 
     private int limit;
     private int color;

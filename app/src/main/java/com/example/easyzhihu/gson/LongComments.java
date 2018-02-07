@@ -16,7 +16,7 @@ public class LongComments {
         public String author;
         public String content;
         public String avatar;
-        public int time;
+        public long time;
         @SerializedName("id")
         public int authorid;
         public int likes;

@@ -27,7 +27,8 @@
         <activity android:name=".Activities.EditorActivity" />
         <activity android:name=".Activities.EditorHomePageActivity" />
         <activity android:name=".Activities.MessageActivity" />
-        <activity android:name=".Activities.StoryFavorActivity"></activity>
+        <activity android:name=".Activities.StoryFavorActivity" />
+        <activity android:name=".Activities.SectionActivity"></activity>
     </application>
 
 </manifest>
