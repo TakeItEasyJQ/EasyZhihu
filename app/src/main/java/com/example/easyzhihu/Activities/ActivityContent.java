@@ -112,7 +112,7 @@ public class ActivityContent extends AppCompatActivity  implements IFragmentCont
                     util=new BodyUtil(content.body);
                     util.init();
                     view_more=util.getViewMoreUrl();
-                    util.RemoveViewMore();
+//                    util.RemoveViewMore();
                     body=util.getNewContent();
 
 
@@ -199,7 +199,7 @@ public class ActivityContent extends AppCompatActivity  implements IFragmentCont
                     @Override
                     public void onPageFinished(WebView view, String url) {
                         super.onPageFinished(view, url);
-                        contentFragment.viewMore.setVisibility(View.VISIBLE);
+//                        contentFragment.viewMore.setVisibility(View.VISIBLE);
                         if (hasSection){
                             Glide.with(ActivityContent.this).load(sectionImage).into(contentFragment.sectionImag);
                             contentFragment.sectionName.setText(sectionName);

@@ -37,6 +37,7 @@ public class BodyUtil {
         handleAuthorNameColor(document);
         handleAuthorBio(document);
         handleHeadLine(document);
+        handleViewMore(document);
     }
 //得到更多的链接
     public String getViewMoreUrl(){
@@ -95,6 +96,15 @@ public class BodyUtil {
         for (Element element:elements){
             element.select("div.heading").attr("style","color:#A9A9A9;font-size:0.85em;height:30px");
         }
+    }
+
+    private void handleViewMore(Document doc){
+
+        Elements elementsout=doc.select("div.view-more");
+        elementsout.attr("style","background-color:#f1f1f1;width:max-width=100%;height:30px;font-size:1.1em;text-align:center;line-height:30px");
+
+        Elements elements=doc.select("div.view-more").select("a");
+        elements.attr("style","color:#a9a9a9;text-decoration: none;");
     }
 
 }

@@ -409,6 +409,7 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
                             dialog.dismiss();
                             Toast.makeText(MessageActivity.this,"没有新的短评论了",Toast.LENGTH_SHORT).show();
                         }
+//                        scrollView.smoothScrollBy(0,-500);
                     }
                 });
 

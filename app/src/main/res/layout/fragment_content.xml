@@ -23,7 +23,7 @@
                 android:id="@+id/headline_layout"
                 android:layout_marginTop="?attr/actionBarSize"
                 android:layout_width="match_parent"
-                android:layout_height="220dp"
+                android:layout_height="300dp"
                 app:layout_collapseMode="parallax">
                 <ImageView
                     android:background="#312341"

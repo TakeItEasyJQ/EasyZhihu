@@ -160,7 +160,9 @@ public class LatestTask extends AsyncTask<HomePageContent,Integer,Boolean> {
         MainActivity.adapter=new LatestAdapter(context,MainActivity.latestStoryList);
         recyclerView.setAdapter(MainActivity.adapter);
         MainActivity.adapter.notifyDataSetChanged();
-
+        if (MainActivity.progressDialog.isShowing()){
+            MainActivity.progressDialog.dismiss();
+        }
     }
 
 

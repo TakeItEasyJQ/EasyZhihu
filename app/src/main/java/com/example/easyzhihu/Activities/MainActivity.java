@@ -1,8 +1,10 @@
 package com.example.easyzhihu.Activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
@@ -20,10 +22,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -105,6 +107,8 @@ public class MainActivity extends AppCompatActivity
 
     public static int position;
 
+    public static ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -151,21 +155,19 @@ public class MainActivity extends AppCompatActivity
         calendar=Calendar.getInstance();
 
         textViews=new ArrayList<>();
-        
-        setSupportActionBar(toolbar);
-//        refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//                getLatestNews();
-//                refresh.setRefreshing(false);
-//            }
-//        });
 
-//        latestListview.setOnScrollListener(this);
+        setSupportActionBar(toolbar);
+
+        progressDialog=new ProgressDialog(MainActivity.this);
 
         scrollView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                CoordinatorLayout a=(CoordinatorLayout)findViewById(R.id.coor);
+                int[] location=new int[2];
+                a.getChildAt(1).getLocationOnScreen(location);
+                int[] location1=new int[2];
+                viewPager.getLocationOnScreen(location1);
                 switch (event.getAction()){
                     case MotionEvent.ACTION_UP:
                         View childview=scrollView.getChildAt(0);
@@ -173,13 +175,41 @@ public class MainActivity extends AppCompatActivity
                                 &&childview.getMeasuredHeight()==v.getHeight()+v.getScrollY()
                                 &&!scrollView.canScrollVertically(1)){    //监听到滑动至最底端了
                             getNewsBefore(MainActivity.date);
-                        }
+                        }else if (childview!=null
+                                &&!scrollView.canScrollVertically(-1)
+                                &&location[1]==location1[1]+viewPager.getMeasuredHeight()
+                                ){
+//                            Toast.makeText(MainActivity.this,String.valueOf(a.getChildAt(1).getTop()),Toast.LENGTH_SHORT).show();
+
+                            progressDialog.setMessage("刷新中...");
+                            progressDialog.show();
+
+                                HttpUtils.getNewsLatest(new Callback() {
+                                    @Override
+                                    public void onFailure(final Call call, IOException e) {
+                                        runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                List<LatestStoryDB> list= DataSupport.order("id desc").find(LatestStoryDB.class);
+                                                LatestAdapter adapter=new LatestAdapter(MainActivity.this,list);
+                                                latestListview.setAdapter(adapter);
+                                                getLatestNews();
+                                            }
+                                        });
+                                    }
+                                    @Override
+                                    public void onResponse(Call call, Response response) throws IOException {
+                                        Gson gson=new Gson();
+                                        HomePageContent homePageContent=gson.fromJson(response.body().string(),HomePageContent.class);
+
+                                        new LatestTask(MainActivity.this,latestListview).execute(homePageContent);
+                                    }
+                                });
+                            }
+
+
+
                         break;
-//                    case MotionEvent.ACTION_MOVE:
-//                       if (scrollView.== MainActivity.position){
-//                           Toast.makeText(MainActivity.this,"131231",Toast.LENGTH_SHORT).show();
-//                       }
-//                        break;
                     default:
                         break;
                 }
@@ -319,18 +349,12 @@ public class MainActivity extends AppCompatActivity
             recyclerView.setAdapter(adapter);
             recyclerView.setNestedScrollingEnabled(false);
             nestedscrolllayout.addView(recyclerView);
-            Toast.makeText(MainActivity.this,"have",Toast.LENGTH_SHORT).show();
 
             recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
                 @Override
                 public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                     super.onScrolled(recyclerView, dx, dy);
-                    if (recyclerView.getBottom()<200){
-                        Toast.makeText(MainActivity.this,"1",Toast.LENGTH_SHORT).show();
-                    }
-                    Toast.makeText(MainActivity.this,"3",Toast.LENGTH_SHORT).show();
-
-//                    Toast.makeText(MainActivity.this,"1",Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(MainActivity.this,"3",Toast.LENGTH_SHORT).show();
                 }
 
                 @Override
@@ -379,10 +403,6 @@ public class MainActivity extends AppCompatActivity
                             recyclerView.setAdapter(adapter);
                             recyclerView.setNestedScrollingEnabled(false);
                             nestedscrolllayout.addView(recyclerView);
-                            Toast.makeText(MainActivity.this,"have no",Toast.LENGTH_SHORT).show();
-//                        Toast.makeText(MainActivity.this,"1",Toast.LENGTH_SHORT).show();
-
-
                         }
 
                     });
