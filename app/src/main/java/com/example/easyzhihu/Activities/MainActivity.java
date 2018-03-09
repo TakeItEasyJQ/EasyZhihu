@@ -261,10 +261,10 @@ public class MainActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case  R.id.menu_night_mode:
-
+                Toast.makeText(this,"sorry ! not finish yet",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.menu_settings:
-
+                Toast.makeText(this,"sorry ! not finish yet",Toast.LENGTH_SHORT).show();
                 break;
             default:
                 return false;
@@ -323,6 +323,7 @@ public class MainActivity extends AppCompatActivity
         intent.putExtra("description",theme.getDescription());
         intent.putExtra("displayimage",theme.getDisplayImage());
         startActivity(intent);
+        drawer.closeDrawers();
     }
 
 

@@ -1,8 +1,10 @@
 package com.example.easyzhihu.Activities;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -29,6 +31,14 @@ public class StoryFavorActivity extends AppCompatActivity implements View.OnClic
         storyFavorites= DataSupport.findAll(StoryFavoriteDB.class);
         back=(ImageView)findViewById(R.id.favor_back);
         back.setOnClickListener(this);
+        favorlistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, final int i, long l) {
+                Intent intent=new Intent(StoryFavorActivity.this,ActivityContent.class);
+                intent.putExtra("newsid",storyFavorites.get(i).getNewsid());
+                startActivity(intent);
+            }
+        });
 
     }
 

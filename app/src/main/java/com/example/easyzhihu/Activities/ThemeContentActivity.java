@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -69,6 +70,8 @@ public class ThemeContentActivity extends AppCompatActivity
 
     private ProgressDialog dialog;
 
+    private LinearLayout layout_favor;
+    private LinearLayout layout_homepage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +94,10 @@ public class ThemeContentActivity extends AppCompatActivity
 
         drawer=(DrawerLayout)findViewById(R.id.theme_activity_drawerlayout);
         themeslistview=(MyListView)findViewById(R.id.drawer_listview);
+
+        layout_favor=(LinearLayout)findViewById(R.id.layout_favor);
+        layout_homepage=(LinearLayout)findViewById(R.id.layout_homepage);
+
 
         scrollView.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -234,6 +241,13 @@ public class ThemeContentActivity extends AppCompatActivity
             case R.id.theme_activity_listview:
 
                 break;
+            case R.id.layout_favor:
+                Intent intent=new Intent(ThemeContentActivity.this,StoryFavorActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.layout_homepage:
+                this.finish();
+                break;
             default:
                 break;
         }
@@ -242,6 +256,9 @@ public class ThemeContentActivity extends AppCompatActivity
     public void setListeners(){
         themeHome.setOnClickListener(this);
         themeslistview.setOnItemClickListener(this);
+
+        layout_favor.setOnClickListener(this);
+        layout_homepage.setOnClickListener(this);
     }
 
     @Override
